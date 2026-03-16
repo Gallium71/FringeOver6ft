@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#0e0806">
+<title>Fringe Over 6ft — Admin</title>
+<style>
+:root{
+  --gold:#d4af37;--gold-l:#f0d060;--gold-d:rgba(212,175,55,.1);
+  --vice:#c06060;--vice-l:#e08080;--vice-d:rgba(192,96,96,.12);
+  --red:#a03030;--red-d:rgba(160,48,48,.12);
+  --grn:#4a7c59;--grn-d:rgba(74,124,89,.1);
+  --b0:#0b0704;--b1:#120d09;--b2:#1a120d;--b3:#241811;--b4:#30201a;
+  --bdr:#2e1c12;--bdr2:#4a3020;
+  --t1:#f2e4d0;--t2:#bfa278;--t3:#6a5040;
+  --r:6px;--r2:10px;
+  --sh:0 2px 12px rgba(0,0,0,.4);--sh2:0 8px 32px rgba(0,0,0,.6);
+  --tr:.18s ease;
+  --f:'Segoe UI',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--b1);color:var(--t1);font-family:var(--f);font-size:14px;line-height:1.6;min-height:100dvh;display:flex;flex-direction:column}
+a{color:var(--gold);text-decoration:none}
+button,input,select,textarea{font-family:var(--f)}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+/* ── HEADER ── */
+.hdr{background:var(--b0);border-bottom:1px solid rgba(212,175,55,.25);position:sticky;top:0;z-index:100;padding:.5rem 1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.logo{font-weight:800;font-size:1rem;color:var(--gold);cursor:pointer;user-select:none}
+.logo em{font-style:normal;font-weight:400;color:var(--t2);font-size:.85em}
+.logo-badge{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;background:var(--vice-d);border:1px solid rgba(192,96,96,.4);color:var(--vice-l);border-radius:var(--r);padding:.1rem .45rem;margin-left:.35rem}
+.hdr-right{margin-left:auto;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:.25rem;padding:.35rem .65rem;font-size:.72rem;font-weight:700;border-radius:var(--r);border:1px solid var(--bdr);background:transparent;color:var(--t2);transition:var(--tr);white-space:nowrap;cursor:pointer;min-height:32px}
+.btn:hover{border-color:var(--gold);color:var(--gold)}
+.btn-g{background:var(--gold);border-color:var(--gold);color:#1a0a02}.btn-g:hover{background:var(--gold-l)}
+.btn-danger{border-color:rgba(160,48,48,.4);color:#e88}.btn-danger:hover{border-color:var(--vice);background:var(--red-d)}
+.pill{background:rgba(255,255,255,.04);border:1px solid var(--bdr);border-radius:20px;padding:.2rem .65rem;font-size:.72rem;color:var(--t2)}
+.pill b{color:var(--gold)}
+
+/* ── LOGIN SCREEN ── */
+.login-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:2rem}
+.login-box{background:var(--b2);border:1px solid var(--bdr2);border-radius:var(--r2);padding:2rem 2.2rem;max-width:380px;width:100%;box-shadow:var(--sh2);position:relative;overflow:hidden}
+.login-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.login-title{font-weight:800;font-size:1.1rem;color:var(--gold);margin-bottom:.2rem}
+.login-sub{font-size:.74rem;color:var(--t3);margin-bottom:1.4rem}
+.fg{margin-bottom:.8rem}
+.fl{display:block;font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--t3);margin-bottom:.25rem}
+.fi{width:100%;background:var(--b0);border:1px solid var(--bdr);border-radius:var(--r);padding:.5rem .7rem;color:var(--t1);font-size:.82rem;outline:none;transition:border-color var(--tr)}
+.fi:focus{border-color:var(--gold)}
+.login-btn{width:100%;background:var(--gold);border:none;border-radius:var(--r);padding:.6rem;font-size:.84rem;font-weight:800;color:#1a0a02;cursor:pointer;transition:background var(--tr);margin-top:.4rem}
+.login-btn:hover{background:var(--gold-l)}
+.login-btn:disabled{opacity:.4;cursor:not-allowed}
+.err-box{background:var(--red-d);border:1px solid rgba(160,48,48,.35);border-radius:var(--r);padding:.5rem .75rem;font-size:.74rem;color:#daa;margin-bottom:.85rem;display:none}
+.err-box.show{display:block}
+
+/* ── LAYOUT ── */
+.adm-wrap{display:flex;flex:1;min-height:0}
+.adm-nav{background:var(--b0);border-right:1px solid var(--bdr);width:220px;flex-shrink:0;padding:1rem 0;display:flex;flex-direction:column;position:sticky;top:48px;height:calc(100vh - 48px);overflow-y:auto}
+.nav-section{padding:.3rem .75rem .1rem;font-size:.52rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--t3);margin-top:.5rem}
+.nav-item{display:flex;align-items:center;gap:.5rem;padding:.45rem .85rem;font-size:.74rem;font-weight:700;color:var(--t2);cursor:pointer;transition:background var(--tr),color var(--tr);border-left:2px solid transparent;white-space:nowrap}
+.nav-item:hover{background:rgba(255,255,255,.04);color:var(--t1)}
+.nav-item.active{color:var(--gold);border-left-color:var(--gold);background:rgba(212,175,55,.06)}
+.nav-badge{font-size:.58rem;font-weight:800;background:var(--vice);color:#fff;border-radius:8px;padding:.05rem .4rem;margin-left:auto}
+.nav-badge.gold{background:var(--gold);color:#1a0a02}
+.adm-main{flex:1;padding:1.5rem;overflow-y:auto;min-width:0}
+
+/* ── SECTIONS ── */
+.section{display:none}.section.active{display:block}
+.section-hd{display:flex;align-items:baseline;gap:.75rem;margin-bottom:1.1rem;flex-wrap:wrap;border-bottom:1px solid var(--bdr);padding-bottom:.75rem}
+.section-hd h2{font-weight:800;font-size:1.1rem;color:var(--gold)}
+.section-sub{font-size:.68rem;color:var(--t3)}
+
+/* ── KPI ROW ── */
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.65rem;margin-bottom:1.2rem}
+.kpi{background:var(--b2);border:1px solid var(--bdr);border-radius:var(--r);padding:.65rem .8rem;text-align:center;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold)}
+.kpi.warn::before{background:var(--vice)}
+.kpi-v{font-size:1.6rem;font-weight:800;color:var(--gold);line-height:1}
+.kpi.warn .kpi-v{color:var(--vice-l)}
+.kpi-l{font-size:.58rem;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-top:.2rem;font-weight:700}
+
+/* ── INSIGHT BOX ── */
+.insight{background:rgba(212,175,55,.07);border:1px solid rgba(212,175,55,.2);border-radius:var(--r);padding:.65rem .85rem;font-size:.73rem;color:var(--t2);line-height:1.6;margin-bottom:1rem}
+.insight strong{color:var(--gold)}
+.insight a{color:var(--gold);text-decoration:underline;cursor:pointer}
+
+/* ── TICKET QUEUE ── */
+.ticket-queue{display:flex;flex-direction:column;gap:.75rem}
+.ticket-card{background:var(--b2);border:1px solid var(--bdr);border-radius:var(--r2);overflow:hidden;display:grid;grid-template-columns:200px 1fr;transition:border-color var(--tr)}
+.ticket-card:hover{border-color:var(--bdr2)}
+.ticket-img{background:repeating-linear-gradient(45deg,var(--b3),var(--b3) 8px,var(--b0) 8px,var(--b0) 16px);border-right:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;min-height:140px;overflow:hidden;position:relative}
+.ticket-img img{width:100%;height:100%;object-fit:cover;display:block;cursor:pointer;transition:opacity var(--tr)}
+.ticket-img img:hover{opacity:.85}
+.ticket-img .no-img{font-size:2rem;opacity:.3}
+.ticket-body{padding:.85rem 1rem;display:flex;flex-direction:column;gap:.3rem}
+.ticket-meta{font-size:.74rem;color:var(--t1);font-weight:700}
+.ticket-sub{font-size:.64rem;color:var(--t2)}
+.ticket-comment{font-size:.68rem;color:var(--t2);font-style:italic;line-height:1.4;padding:.35rem .5rem;background:var(--b0);border-radius:var(--r);border-left:2px solid var(--bdr)}
+.ticket-rating{font-size:.9rem}
+.ticket-actions{display:flex;gap:.5rem;margin-top:.4rem;flex-wrap:wrap}
+.tc-approve{background:var(--grn);border:none;border-radius:var(--r);padding:.4rem 1rem;font-size:.74rem;font-weight:800;color:#fff;cursor:pointer;transition:opacity var(--tr)}
+.tc-approve:hover{opacity:.85}.tc-approve:disabled{opacity:.4;cursor:not-allowed}
+.tc-reject{background:var(--red-d);border:1px solid rgba(160,48,48,.4);border-radius:var(--r);padding:.4rem 1rem;font-size:.74rem;font-weight:800;color:#e88;cursor:pointer;transition:opacity var(--tr)}
+.tc-reject:hover{opacity:.85}.tc-reject:disabled{opacity:.4;cursor:not-allowed}
+
+/* ── IMAGE LIGHTBOX ── */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:500;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .15s}
+.lightbox.open{opacity:1;pointer-events:all}
+.lightbox img{max-width:100%;max-height:90vh;border-radius:var(--r);box-shadow:var(--sh2);object-fit:contain}
+.lightbox-close{position:absolute;top:1rem;right:1rem;background:rgba(0,0,0,.6);border:1px solid var(--bdr);color:var(--t1);font-size:1.2rem;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background var(--tr)}
+.lightbox-close:hover{background:rgba(255,255,255,.15)}
+
+/* ── TABLES ── */
+.tbl-wrap{overflow-x:auto;border-radius:var(--r2);border:1px solid var(--bdr)}
+table{width:100%;border-collapse:collapse;font-size:.72rem}
+th{text-align:left;color:var(--t3);font-weight:800;font-size:.58rem;text-transform:uppercase;letter-spacing:.07em;padding:.45rem .65rem;border-bottom:1px solid var(--bdr);background:var(--b0);position:sticky;top:0;z-index:1;white-space:nowrap}
+td{padding:.45rem .65rem;border-bottom:1px solid rgba(46,28,18,.3);color:var(--t2);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,.02)}
+td b{color:var(--t1)}
+td.link{color:var(--gold);font-weight:700;cursor:pointer}
+td.link:hover{text-decoration:underline}
+
+/* ── TAGS ── */
+.tag{display:inline-block;font-size:.56rem;font-weight:800;border-radius:8px;padding:.08rem .4rem;margin:.05rem}
+.tag.admin{background:rgba(212,175,55,.2);color:var(--gold);border:1px solid rgba(212,175,55,.3)}
+.tag.banned{background:rgba(160,48,48,.2);color:#e88;border:1px solid rgba(160,48,48,.4)}
+.tag.pending{background:rgba(212,175,55,.15);color:var(--gold);border:1px solid rgba(212,175,55,.25)}
+.tag.approved{background:rgba(74,124,89,.2);color:#7ec899;border:1px solid rgba(74,124,89,.3)}
+.tag.rejected{background:rgba(160,48,48,.15);color:#e88;border:1px solid rgba(160,48,48,.3)}
+.tag.flagged{background:rgba(192,96,96,.2);color:var(--vice-l);border:1px solid rgba(192,96,96,.3)}
+.tag.active-tag{background:rgba(74,124,89,.1);color:#7ec899;border:1px solid rgba(74,124,89,.2);font-size:.56rem;font-weight:800;border-radius:8px;padding:.08rem .4rem}
+
+/* ── ACTION BUTTONS ── */
+.act-btns{display:flex;gap:.3rem;flex-wrap:wrap}
+.abtn{display:inline-flex;align-items:center;gap:.2rem;padding:.22rem .55rem;font-size:.62rem;font-weight:700;border-radius:var(--r);border:1px solid var(--bdr);background:transparent;color:var(--t3);cursor:pointer;transition:var(--tr);white-space:nowrap}
+.abtn:hover{border-color:var(--t2);color:var(--t2)}
+.abtn.danger{color:#e88;border-color:rgba(160,48,48,.3)}.abtn.danger:hover{border-color:var(--vice);background:rgba(160,48,48,.1)}
+.abtn.warn{color:var(--gold);border-color:rgba(212,175,55,.25)}.abtn.warn:hover{border-color:var(--gold);background:var(--gold-d)}
+.abtn.ok{color:#7ec899;border-color:rgba(74,124,89,.3)}.abtn.ok:hover{border-color:var(--grn);background:var(--grn-d)}
+
+/* ── SEARCH & FILTERS ── */
+.toolbar{display:flex;gap:.5rem;margin-bottom:.85rem;align-items:center;flex-wrap:wrap}
+.srch-in{flex:1;min-width:180px;background:var(--b0);border:1px solid var(--bdr);border-radius:var(--r);padding:.4rem .65rem;color:var(--t1);font-size:.8rem;outline:none;transition:border-color var(--tr)}
+.srch-in:focus{border-color:var(--gold)}
+.filter-btns{display:flex;gap:.3rem;flex-wrap:wrap}
+.fbtn{padding:.28rem .65rem;font-size:.66rem;font-weight:700;border-radius:14px;border:1px solid var(--bdr);background:var(--b2);color:var(--t3);cursor:pointer;transition:var(--tr)}
+.fbtn.active{background:var(--gold);border-color:var(--gold);color:#1a0a02}
+.fbtn:hover:not(.active){border-color:var(--t2);color:var(--t2)}
+
+/* ── PAGINATION ── */
+.pg-row{display:flex;align-items:center;gap:.5rem;margin-top:.85rem;flex-wrap:wrap}
+.pg-info{font-size:.68rem;color:var(--t3);flex:1}
+
+/* ── MODAL (edit user) ── */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:300;display:flex;align-items:center;justify-content:center;padding:.75rem;opacity:0;pointer-events:none;transition:opacity .15s}
+.ov.open{opacity:1;pointer-events:all}
+.mdl{background:var(--b2);border:1px solid var(--bdr2);border-radius:var(--r2);padding:1.4rem 1.6rem;max-width:440px;width:100%;box-shadow:var(--sh2);transform:translateY(-8px);transition:transform .15s;max-height:92vh;overflow-y:auto}
+.ov.open .mdl{transform:translateY(0)}
+.mdl-t{font-weight:800;font-size:1.05rem;color:var(--gold);margin-bottom:.2rem}
+.mdl-s{font-size:.74rem;color:var(--t2);margin-bottom:1rem}
+.edit-row{display:flex;align-items:center;gap:.5rem;padding:.35rem 0;border-bottom:1px solid var(--bdr)}
+.edit-row:last-child{border-bottom:none}
+.edit-lbl{font-size:.68rem;color:var(--t3);font-weight:700;min-width:110px;flex-shrink:0}
+.edit-in{flex:1;background:var(--b0);border:1px solid var(--bdr);border-radius:var(--r);padding:.3rem .55rem;color:var(--t1);font-size:.76rem;outline:none;transition:border-color var(--tr)}
+.edit-in:focus{border-color:var(--gold)}
+.tog{position:relative;width:36px;height:20px;flex-shrink:0}
+.tog input{opacity:0;width:0;height:0;position:absolute}
+.tog-sl{position:absolute;inset:0;background:var(--bdr);border-radius:10px;cursor:pointer;transition:.2s}
+.tog-sl::before{content:'';position:absolute;width:14px;height:14px;left:3px;top:3px;background:var(--t3);border-radius:50%;transition:.2s}
+.tog input:checked+.tog-sl{background:var(--gold)}
+.tog input:checked+.tog-sl::before{transform:translateX(16px);background:#1a0a02}
+.mdl-f{display:flex;gap:.45rem;margin-top:1rem}
+.mc{flex:1;background:transparent;border:1px solid var(--bdr);border-radius:var(--r);padding:.55rem;color:var(--t3);font-size:.78rem;font-weight:700;transition:var(--tr);cursor:pointer}
+.mc:hover{border-color:var(--t2);color:var(--t2)}
+.mx{flex:2;background:var(--gold);border:none;border-radius:var(--r);padding:.55rem;color:#1a0a02;font-weight:800;font-size:.84rem;transition:background var(--tr);cursor:pointer}
+.mx:hover{background:var(--gold-l)}.mx:disabled{opacity:.4;cursor:not-allowed}
+.msg-ok{font-size:.72rem;color:#7ec899;margin-top:.5rem;display:none}
+.msg-ok.show{display:block}
+.msg-err{font-size:.72rem;color:#e88;margin-top:.5rem;display:none}
+.msg-err.show{display:block}
+
+/* ── NO DATA ── */
+.no-data{text-align:center;padding:2.5rem 1rem;color:var(--t3);font-style:italic;font-size:.76rem}
+.no-data .icon{font-size:2rem;display:block;margin-bottom:.5rem;opacity:.4}
+
+/* ── TOAST ── */
+.tw{position:fixed;bottom:1rem;right:1rem;z-index:999;display:flex;flex-direction:column;gap:.3rem;pointer-events:none}
+.toast{background:var(--b2);border:1px solid var(--bdr);border-left:3px solid var(--gold);border-radius:var(--r);padding:.55rem .8rem;font-size:.75rem;font-weight:700;color:var(--t1);box-shadow:var(--sh);max-width:300px;animation:tIn .2s ease;pointer-events:auto}
+.toast.err{border-left-color:var(--vice)}
+.toast.ok{border-left-color:var(--grn)}
+@keyframes tIn{from{transform:translateX(100%);opacity:0}to{transform:none;opacity:1}}
+@keyframes tOut{from{opacity:1}to{transform:translateX(100%);opacity:0}}
+
+/* ── LEGSCORE ── */
+.legs-s{font-size:.9rem;letter-spacing:1px}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .adm-nav{position:static;height:auto;width:100%;flex-direction:row;flex-wrap:wrap;padding:.5rem;gap:.25rem;border-right:none;border-bottom:1px solid var(--bdr)}
+  .nav-section{display:none}
+  .nav-item{border-left:none;border-radius:var(--r);padding:.3rem .65rem;font-size:.68rem;border:1px solid var(--bdr)}
+  .nav-item.active{background:var(--gold);color:#1a0a02;border-color:var(--gold)}
+  .adm-wrap{flex-direction:column}
+}
+@media(max-width:640px){
+  .adm-main{padding:.75rem}
+  .ticket-card{grid-template-columns:1fr}
+  .ticket-img{border-right:none;border-bottom:1px solid var(--bdr);min-height:120px}
+  .kpi-row{grid-template-columns:repeat(auto-fill,minmax(110px,1fr))}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="logo" onclick="window.open('/','_blank')">Fringe <em>Over</em> 6ft <span class="logo-badge">Admin</span></div>
+  <div class="hdr-right" id="hdrRight">
+    <!-- populated by JS -->
+  </div>
+</header>
+
+<!-- Login screen (shown when not authenticated) -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <div class="login-title">Admin Panel</div>
+    <div class="login-sub">Sign in with your admin account</div>
+    <div class="err-box" id="loginErr"></div>
+    <div class="fg"><label class="fl">Username or Email</label><input class="fi" id="loginU" autocomplete="username" placeholder="admin username"></div>
+    <div class="fg"><label class="fl">Password</label><input class="fi" type="password" id="loginP" autocomplete="current-password"></div>
+    <button class="login-btn" id="loginBtn">Sign In →</button>
+    <div style="margin-top:.75rem;text-align:center;font-size:.62rem;color:var(--t3)">Admin accounts only · <a href="/" style="color:var(--gold)">← Back to site</a></div>
+  </div>
+</div>
+
+<!-- Admin panel (shown when authenticated) -->
+<div class="adm-wrap" id="admWrap" style="display:none">
+  <nav class="adm-nav" id="admNav">
+    <div class="nav-section">Overview</div>
+    <div class="nav-item active" data-sec="dashboard">📊 Dashboard</div>
+    <div class="nav-section">Moderation</div>
+    <div class="nav-item" data-sec="tickets">📸 Ticket Queue <span class="nav-badge" id="navBadgeTickets">0</span></div>
+    <div class="nav-item" data-sec="reviews">💬 Reviews</div>
+    <div class="nav-section">Users</div>
+    <div class="nav-item" data-sec="users">👥 Users</div>
+  </nav>
+  <main class="adm-main">
+
+    <!-- DASHBOARD -->
+    <div class="section active" id="sec-dashboard">
+      <div class="section-hd"><h2>📊 Dashboard</h2><span class="section-sub">Fringe Over 6ft moderation panel</span></div>
+      <div class="kpi-row" id="dashKpis"></div>
+      <div class="insight" id="dashInsight">Loading…</div>
+    </div>
+
+    <!-- TICKET QUEUE -->
+    <div class="section" id="sec-tickets">
+      <div class="section-hd"><h2>📸 Ticket Verification Queue</h2><span class="section-sub" id="ticketCount">Loading…</span></div>
+      <div class="insight">Approve tickets to grant <strong>5× vote weight</strong>. Reject if unclear, fake, or unrelated — the image will be permanently deleted. Until approved, reviews count at <strong>1× weight</strong>.</div>
+      <div class="ticket-queue" id="ticketQueue"><div class="no-data"><span class="icon">📸</span>Loading…</div></div>
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="section" id="sec-reviews">
+      <div class="section-hd"><h2>💬 Review Management</h2><span class="section-sub" id="revCount"></span></div>
+      <div class="toolbar">
+        <div class="filter-btns" id="revFilters">
+          <button class="fbtn active" data-filter="all">All</button>
+          <button class="fbtn" data-filter="pending">📸 Pending Tickets</button>
+          <button class="fbtn" data-filter="flagged">🚩 Flagged</button>
+        </div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>#</th><th>User</th><th>Space</th><th>Rating</th><th>Comment</th><th>Ticket</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody id="revBody"></tbody>
+        </table>
+      </div>
+      <div class="pg-row"><span class="pg-info" id="revPageInfo"></span><button class="btn" id="revPrev" disabled>← Prev</button><button class="btn" id="revNext">Next →</button></div>
+    </div>
+
+    <!-- USERS -->
+    <div class="section" id="sec-users">
+      <div class="section-hd"><h2>👥 User Management</h2><span class="section-sub" id="userCount"></span></div>
+      <div class="toolbar">
+        <input class="srch-in" id="userSearch" placeholder="Search username, email, display name…" autocomplete="off">
+        <button class="btn" id="userSearchBtn">Search</button>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>#</th><th>Username</th><th>Display Name</th><th>Email</th><th>Height</th><th>Reviews</th><th>Status</th><th>Joined</th><th>Actions</th></tr></thead>
+          <tbody id="userBody"></tbody>
+        </table>
+      </div>
+      <div class="pg-row"><span class="pg-info" id="userPageInfo"></span><button class="btn" id="userPrev" disabled>← Prev</button><button class="btn" id="userNext">Next →</button></div>
+    </div>
+
+  </main>
+</div>
+
+<!-- EDIT USER MODAL -->
+<div class="ov" id="editUserOv">
+  <div class="mdl">
+    <div class="mdl-t">✏️ Edit User</div>
+    <div class="mdl-s" id="editUserSub">Editing user</div>
+    <div class="msg-err" id="editErr"></div>
+    <div class="msg-ok" id="editOk"></div>
+    <div id="editFields"></div>
+    <div class="mdl-f">
+      <button class="mc" id="editCancelBtn">Cancel</button>
+      <button class="mx" id="editSaveBtn">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- IMAGE LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">✕</button>
+  <img id="lightboxImg" src="" alt="Ticket">
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="tw" id="tw"></div>
+
+<script>
+'use strict';
+// ── State ─────────────────────────────────────────────
+var A = {
+  user: null,
+  section: 'dashboard',
+  revPage: 0, revFilter: 'all', revTotal: 0,
+  userPage: 0, userQ: '', userTotal: 0,
+  editingUserId: null
+};
+var REV_LIMIT = 50, USER_LIMIT = 50;
+
+// ── Utils ──────────────────────────────────────────────
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s!=null?s:'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function cm2fi(cm){ return {ft:Math.floor(cm/2.54/12),in:Math.round(cm/2.54%12)}; }
+function fh(cm){ var h=cm2fi(cm); return h.ft+"'"+h.in+'" / '+Math.round(cm)+'cm'; }
+function legsS(r){
+    if(!r && r!==0) return '✖';
+    if(r===0) return '✖';
+    // Show r chairs all of the same level design
+    var html='';
+    for(var i=0;i<r;i++) html+='🪑';
+    return '<span class="legs-s" title="'+r+'/5 — '+['Can\'t sit','Agonising','Cramped','Bearable','Comfortable','Luxurious'][r]+'" style="letter-spacing:1px">'+html+'</span>';
+}
+
+function toast(m, t) {
+  var w=$('tw'), e=document.createElement('div');
+  e.className='toast '+(t||'');
+  e.textContent=m;
+  w.appendChild(e);
+  setTimeout(function(){
+    e.style.animation='tOut .2s ease forwards';
+    setTimeout(function(){e.remove();},210);
+  },2800);
+}
+
+function api(u, o) {
+  if(!o) o={};
+  return fetch(u, Object.assign({headers:{'Content-Type':'application/json'}}, o))
+    .then(function(r){
+      return r.json().then(function(d){
+        if(!r.ok) throw Object.assign({status:r.status}, d);
+        return d;
+      });
+    });
+}
+
+// ── Auth ───────────────────────────────────────────────
+function showLogin() {
+  $('loginWrap').style.display = 'flex';
+  $('admWrap').style.display = 'none';
+  $('hdrRight').innerHTML = '<a href="/" class="btn">← Back to site</a>';
+}
+
+function showAdmin(user) {
+  A.user = user;
+  $('loginWrap').style.display = 'none';
+  $('admWrap').style.display = 'flex';
+  $('hdrRight').innerHTML =
+    '<div class="pill">🛡 Admin: <b>'+esc(user.display_name)+'</b></div>'+
+    '<a href="/" class="btn" target="_blank">← View Site</a>'+
+    '<button class="btn btn-danger" id="logoutBtn">Sign Out</button>';
+  $('logoutBtn').addEventListener('click', doLogout);
+  loadSection('dashboard');
+}
+
+function doLogin() {
+  var u=$('loginU').value.trim(), p=$('loginP').value;
+  var errEl=$('loginErr');
+  errEl.style.display='none'; errEl.textContent='';
+  if(!u||!p){errEl.textContent='Enter username and password.';errEl.style.display='block';return;}
+  var btn=$('loginBtn'); btn.disabled=true; btn.textContent='Signing in…';
+  api('/api/auth/login',{method:'POST',body:JSON.stringify({identifier:u,password:p})})
+    .then(function(d){
+      if(!d.user.is_admin){
+        errEl.textContent='This account does not have admin access.';
+        errEl.style.display='block';
+        return api('/api/auth/logout',{method:'POST'});
+      }
+      showAdmin(d.user);
+    })
+    .catch(function(e){
+      errEl.textContent=e.error||'Login failed.';
+      errEl.style.display='block';
+    })
+    .then(function(){ btn.disabled=false; btn.textContent='Sign In →'; });
+}
+
+function doLogout() {
+  api('/api/auth/logout',{method:'POST'}).catch(function(){});
+  A.user=null;
+  showLogin();
+  toast('Signed out.');
+}
+
+// ── Navigation ──────────────────────────────────────────
+function loadSection(sec) {
+  A.section = sec;
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active');});
+  document.querySelectorAll('.nav-item').forEach(function(i){i.classList.toggle('active',i.dataset.sec===sec);});
+  var el=$('sec-'+sec);
+  if(el) el.classList.add('active');
+  if(sec==='dashboard') loadDashboard();
+  else if(sec==='tickets') loadTickets();
+  else if(sec==='reviews'){ A.revPage=0; loadReviews(); }
+  else if(sec==='users'){ A.userPage=0; loadUsers(); }
+}
+
+// ── Dashboard ───────────────────────────────────────────
+function loadDashboard() {
+  api('/api/admin/summary').then(function(d){
+    $('dashKpis').innerHTML =
+      '<div class="kpi"><div class="kpi-v">'+d.totalUsers+'</div><div class="kpi-l">Users</div></div>'+
+      '<div class="kpi"><div class="kpi-v">'+d.totalReviews+'</div><div class="kpi-l">Reviews</div></div>'+
+      '<div class="kpi warn"><div class="kpi-v">'+d.pendingTickets+'</div><div class="kpi-l">Pending Tickets</div></div>'+
+      '<div class="kpi"><div class="kpi-v">'+d.approvedTickets+'</div><div class="kpi-l">Verified (5×)</div></div>'+
+      '<div class="kpi warn"><div class="kpi-v">'+d.flaggedReviews+'</div><div class="kpi-l">Flagged Reviews</div></div>'+
+      '<div class="kpi warn"><div class="kpi-v">'+d.bannedUsers+'</div><div class="kpi-l">Banned Users</div></div>'+
+      '<div class="kpi"><div class="kpi-v">'+d.adminUsers+'</div><div class="kpi-l">Admins</div></div>';
+    var ins = '<strong>Status:</strong> ';
+    if(d.pendingTickets>0) ins+='<a id="dashGoTickets">'+d.pendingTickets+' ticket'+(d.pendingTickets!==1?'s':'')+' awaiting verification →</a> ';
+    else ins+='No pending tickets. ';
+    if(d.flaggedReviews>0) ins+='<a id="dashGoFlagged">'+d.flaggedReviews+' flagged review'+(d.flaggedReviews!==1?'s':'')+' need attention →</a>';
+    else ins+='No flagged reviews.';
+    $('dashInsight').innerHTML = ins;
+    var gt=$('dashGoTickets'); if(gt)gt.addEventListener('click',function(){loadSection('tickets');});
+    var gf=$('dashGoFlagged'); if(gf)gf.addEventListener('click',function(){A.revFilter='flagged';loadSection('reviews');});
+    var nb=$('navBadgeTickets'); if(nb)nb.textContent=d.pendingTickets;
+  }).catch(function(e){$('dashInsight').textContent='Failed to load: '+(e.error||e.message||'unknown');});
+}
+
+// ── Ticket Queue ────────────────────────────────────────
+function loadTickets() {
+  var el=$('ticketQueue');
+  el.innerHTML='<div class="no-data"><span class="icon">⏳</span>Loading…</div>';
+  api('/api/admin/tickets/pending').then(function(d){
+    $('ticketCount').textContent = d.tickets.length+' ticket'+(d.tickets.length!==1?'s':'')+' awaiting review';
+    var nb=$('navBadgeTickets'); if(nb)nb.textContent=d.tickets.length;
+    if(!d.tickets.length){
+      el.innerHTML='<div class="no-data"><span class="icon">🎉</span>All caught up — no pending tickets.</div>';
+      return;
+    }
+    el.innerHTML = d.tickets.map(function(t){
+      var imgSrc = '/api/admin/ticket/'+esc(t.ticket_photo);
+      return '<div class="ticket-card" data-rid="'+t.id+'">'+
+        '<div class="ticket-img">'+
+          (t.ticket_photo
+            ? '<img src="'+imgSrc+'" alt="Ticket stub" onclick="openLightbox(\''+imgSrc+'\')" title="Click to enlarge">'
+            : '<span class="no-img">📸</span>')+
+        '</div>'+
+        '<div class="ticket-body">'+
+          '<div class="ticket-meta">'+esc(t.display_name)+' <span style="font-weight:400;color:var(--t3)">(@'+esc(t.username)+')</span></div>'+
+          '<div class="ticket-sub">📍 '+esc(t.stage_name)+' @ '+esc(t.venue_name)+'</div>'+
+          '<div class="ticket-rating"><span class="legs-s">'+legsS(t.rating)+'</span> '+(t.year||'')+'</div>'+
+          (t.comment?'<div class="ticket-comment">"'+esc(t.comment)+'"</div>':'')+
+          '<div class="ticket-sub" style="color:var(--t3)">'+(t.created_at||'').slice(0,10)+' · Review #'+t.id+'</div>'+
+          '<div class="ticket-actions">'+
+            '<button class="tc-approve" data-rid="'+t.id+'" data-action="approve">✅ Approve — grant 5× weight</button>'+
+            '<button class="tc-reject" data-rid="'+t.id+'" data-action="reject">✗ Reject &amp; Delete Image</button>'+
+          '</div>'+
+        '</div></div>';
+    }).join('');
+
+    el.querySelectorAll('[data-action]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var rid=btn.dataset.rid, action=btn.dataset.action;
+        var card=btn.closest('.ticket-card');
+        var allBtns=card.querySelectorAll('button');
+        allBtns.forEach(function(b){b.disabled=true;});
+        btn.textContent='Processing…';
+        api('/api/admin/ticket/'+rid,{method:'PUT',body:JSON.stringify({action:action})})
+          .then(function(){
+            toast(action==='approve'?'✅ Ticket approved — 5× weight applied':'✗ Ticket rejected & image deleted');
+            loadTickets();
+            loadDashboard();
+          })
+          .catch(function(e){
+            toast(e.error||'Action failed','err');
+            allBtns.forEach(function(b){b.disabled=false;});
+            btn.textContent=action==='approve'?'✅ Approve':'✗ Reject';
+          });
+      });
+    });
+  }).catch(function(e){
+    el.innerHTML='<div class="no-data"><span class="icon">⚠️</span>Failed to load tickets.</div>';
+    console.error(e);
+  });
+}
+
+// ── Review Management ───────────────────────────────────
+function loadReviews() {
+  var tbody=$('revBody');
+  tbody.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--t3);padding:2rem">Loading…</td></tr>';
+  api('/api/admin/reviews?limit='+REV_LIMIT+'&offset='+(A.revPage*REV_LIMIT)+'&filter='+A.revFilter)
+    .then(function(d){
+      A.revTotal=d.total;
+      $('revCount').textContent=d.total+' review'+(d.total!==1?'s':'');
+      $('revPageInfo').textContent='Page '+(A.revPage+1)+' of '+Math.max(1,Math.ceil(d.total/REV_LIMIT));
+      $('revPrev').disabled=A.revPage===0;
+      $('revNext').disabled=(A.revPage+1)*REV_LIMIT>=d.total;
+
+      // sync filter buttons
+      document.querySelectorAll('#revFilters .fbtn').forEach(function(b){
+        b.classList.toggle('active',b.dataset.filter===A.revFilter);
+      });
+
+      if(!d.reviews.length){
+        tbody.innerHTML='<tr><td colspan="8"><div class="no-data">No reviews match.</div></td></tr>';
+        return;
+      }
+      tbody.innerHTML = d.reviews.map(function(r){
+        var ts=r.ticket_status;
+        var tsTag=ts?'<span class="tag '+ts+'">'+ts+'</span>':'<span style="color:var(--t3);font-size:.6rem">none</span>';
+        var flagTag=r.flagged?'<span class="tag flagged">flagged</span>':'';
+        return '<tr>'+
+          '<td style="color:var(--t3)">'+r.id+'</td>'+
+          '<td><b>'+esc(r.display_name)+'</b><br><span style="font-size:.62rem;color:var(--t3)">@'+esc(r.username)+'</span></td>'+
+          '<td><b>'+esc(r.stage_name)+'</b><br><span style="font-size:.62rem;color:var(--t3)">'+esc(r.venue_name)+'</span></td>'+
+          '<td><span class="legs-s">'+legsS(r.rating)+'</span></td>'+
+          '<td style="max-width:180px;font-size:.66rem">'+(r.comment?'"'+esc(r.comment.slice(0,80))+(r.comment.length>80?'…':'')+'"':'<span style="color:var(--t3)">—</span>')+'</td>'+
+          '<td>'+tsTag+' '+flagTag+'</td>'+
+          '<td style="font-size:.62rem;white-space:nowrap">'+(r.created_at||'').slice(0,10)+'</td>'+
+          '<td><div class="act-btns">'+
+            '<button class="abtn danger" data-del-rev="'+r.id+'" title="Delete review">🗑</button>'+
+            (r.flagged
+              ? '<button class="abtn ok" data-unflag="'+r.id+'" title="Remove flag">✓ Unflag</button>'
+              : '<button class="abtn warn" data-flag="'+r.id+'" title="Flag review">🚩 Flag</button>')+
+          '</div></td>'+
+        '</tr>';
+      }).join('');
+
+      tbody.querySelectorAll('[data-del-rev]').forEach(function(b){
+        b.addEventListener('click',function(){
+          if(!confirm('Delete review #'+b.dataset.delRev+'? This cannot be undone.'))return;
+          api('/api/admin/review/'+b.dataset.delRev,{method:'DELETE'})
+            .then(function(){toast('Review deleted.');loadReviews();loadDashboard();})
+            .catch(function(e){toast(e.error||'Failed','err');});
+        });
+      });
+      tbody.querySelectorAll('[data-flag]').forEach(function(b){
+        b.addEventListener('click',function(){
+          api('/api/admin/review/'+b.dataset.flag+'/flag',{method:'PUT',body:JSON.stringify({flagged:true})})
+            .then(function(){toast('Review flagged.');loadReviews();})
+            .catch(function(e){toast(e.error||'Failed','err');});
+        });
+      });
+      tbody.querySelectorAll('[data-unflag]').forEach(function(b){
+        b.addEventListener('click',function(){
+          api('/api/admin/review/'+b.dataset.unflag+'/flag',{method:'PUT',body:JSON.stringify({flagged:false})})
+            .then(function(){toast('Flag removed.');loadReviews();})
+            .catch(function(e){toast(e.error||'Failed','err');});
+        });
+      });
+    })
+    .catch(function(e){
+      tbody.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--t3)">Failed to load.</td></tr>';
+    });
+}
+
+// ── User Management ─────────────────────────────────────
+function loadUsers() {
+  var tbody=$('userBody');
+  tbody.innerHTML='<tr><td colspan="9" style="text-align:center;color:var(--t3);padding:2rem">Loading…</td></tr>';
+  var url='/api/admin/users?limit='+USER_LIMIT+'&offset='+(A.userPage*USER_LIMIT);
+  if(A.userQ) url+='&q='+encodeURIComponent(A.userQ);
+  api(url).then(function(d){
+    A.userTotal=d.total;
+    $('userCount').textContent=d.total+' user'+(d.total!==1?'s':'');
+    $('userPageInfo').textContent='Page '+(A.userPage+1)+' of '+Math.max(1,Math.ceil(d.total/USER_LIMIT));
+    $('userPrev').disabled=A.userPage===0;
+    $('userNext').disabled=(A.userPage+1)*USER_LIMIT>=d.total;
+
+    if(!d.users.length){
+      tbody.innerHTML='<tr><td colspan="9"><div class="no-data">No users found.</div></td></tr>';
+      return;
+    }
+    tbody.innerHTML = d.users.map(function(u){
+      var tags=[];
+      if(u.is_admin) tags.push('<span class="tag admin">admin</span>');
+      if(u.banned)   tags.push('<span class="tag banned">banned</span>');
+      if(!u.is_admin&&!u.banned) tags.push('<span class="tag active-tag">active</span>');
+      var uData=JSON.stringify({
+        id:u.id,username:u.username,display_name:u.display_name,
+        height_cm:u.height_cm,is_admin:u.is_admin,banned:u.banned,ban_reason:u.ban_reason
+      }).replace(/'/g,'&#39;');
+      return '<tr>'+
+        '<td style="color:var(--t3)">'+u.id+'</td>'+
+        '<td><b>'+esc(u.username)+'</b>'+(u.email_verified?'':' <span style="font-size:.56rem;color:var(--gold)">unverified</span>')+'</td>'+
+        '<td>'+esc(u.display_name)+'</td>'+
+        '<td style="font-size:.66rem">'+esc(u.email)+'</td>'+
+        '<td style="font-size:.66rem;white-space:nowrap">'+(u.height_cm?fh(u.height_cm):'—')+'</td>'+
+        '<td style="text-align:center">'+u.review_count+'</td>'+
+        '<td>'+tags.join(' ')+'</td>'+
+        '<td style="font-size:.62rem;white-space:nowrap">'+(u.created_at||'').slice(0,10)+'</td>'+
+        '<td><div class="act-btns">'+
+          '<button class="abtn warn" data-edit-user=\''+uData+'\' title="Edit user">✏️ Edit</button>'+
+          (u.id!==A.user.id?'<button class="abtn danger" data-del-user="'+u.id+'" title="Delete user">🗑</button>':'')+
+        '</div></td>'+
+      '</tr>';
+    }).join('');
+
+    tbody.querySelectorAll('[data-edit-user]').forEach(function(b){
+      b.addEventListener('click',function(){
+        try{openEditUser(JSON.parse(b.dataset.editUser));}catch(e){console.error(e);}
+      });
+    });
+    tbody.querySelectorAll('[data-del-user]').forEach(function(b){
+      b.addEventListener('click',function(){
+        var uid=b.dataset.delUser;
+        if(!confirm('Delete user #'+uid+' and ALL their reviews? This cannot be undone.'))return;
+        api('/api/admin/user/'+uid,{method:'DELETE'})
+          .then(function(){toast('User deleted.');loadUsers();loadDashboard();})
+          .catch(function(e){toast(e.error||'Failed','err');});
+      });
+    });
+  }).catch(function(e){
+    tbody.innerHTML='<tr><td colspan="9" style="text-align:center;color:var(--t3)">Failed to load.</td></tr>';
+  });
+}
+
+// ── Edit User Modal ─────────────────────────────────────
+function openEditUser(u) {
+  A.editingUserId=u.id;
+  $('editUserSub').textContent='Editing: @'+u.username+' (ID '+u.id+')';
+  $('editErr').classList.remove('show'); $('editErr').textContent='';
+  $('editOk').classList.remove('show');
+  $('editFields').innerHTML=
+    '<div class="edit-row"><div class="edit-lbl">Display Name</div><input class="edit-in" id="euDN" value="'+esc(u.display_name||'')+'" maxlength="40"></div>'+
+    '<div class="edit-row"><div class="edit-lbl">Height (cm)</div><input class="edit-in" id="euHt" type="number" value="'+(u.height_cm||'')+'" min="90" max="250" placeholder="e.g. 188"></div>'+
+    '<div class="edit-row"><div class="edit-lbl">Admin access</div><label class="tog"><input type="checkbox" id="euAdmin" '+(u.is_admin?'checked':'')+'><span class="tog-sl"></span></label></div>'+
+    '<div class="edit-row"><div class="edit-lbl">Banned</div><label class="tog"><input type="checkbox" id="euBanned" '+(u.banned?'checked':'')+'><span class="tog-sl"></span></label></div>'+
+    '<div class="edit-row"><div class="edit-lbl">Ban Reason</div><input class="edit-in" id="euBanReason" value="'+esc(u.ban_reason||'')+'" placeholder="Optional" maxlength="200"></div>';
+  $('editUserOv').classList.add('open');
+}
+
+function saveEditUser() {
+  var uid=A.editingUserId; if(!uid)return;
+  var body={
+    display_name:$('euDN').value.trim(),
+    height_cm:$('euHt').value||null,
+    is_admin:$('euAdmin').checked,
+    banned:$('euBanned').checked,
+    ban_reason:$('euBanReason').value.trim()||null
+  };
+  var btn=$('editSaveBtn'); btn.disabled=true; btn.textContent='Saving…';
+  $('editErr').classList.remove('show');
+  api('/api/admin/user/'+uid,{method:'PUT',body:JSON.stringify(body)})
+    .then(function(){
+      $('editOk').textContent='✅ Saved!'; $('editOk').classList.add('show');
+      toast('User updated.');
+      loadUsers();
+      // if editing self, update display
+      if(uid===A.user.id){
+        return api('/api/auth/me').then(function(d){
+          if(d.user) A.user=d.user;
+        }).catch(function(){});
+      }
+    })
+    .catch(function(e){
+      $('editErr').textContent=e.error||'Save failed.'; $('editErr').classList.add('show');
+      toast(e.error||'Save failed','err');
+    })
+    .then(function(){ btn.disabled=false; btn.textContent='Save Changes'; });
+}
+
+// ── Lightbox ────────────────────────────────────────────
+function openLightbox(src) {
+  $('lightboxImg').src = src;
+  $('lightbox').classList.add('open');
+}
+function closeLightbox() {
+  $('lightbox').classList.remove('open');
+  $('lightboxImg').src = '';
+}
+
+// ── Init ───────────────────────────────────────────────
+function init() {
+  // Check if already logged in
+  api('/api/auth/me').then(function(d){
+    if(d.user&&d.user.is_admin){
+      showAdmin(d.user);
+    } else {
+      if(d.user&&!d.user.is_admin){
+        // logged in but not admin — show login with message
+        $('loginErr').textContent='Your account does not have admin access.';
+        $('loginErr').style.display='block';
+      }
+      showLogin();
+    }
+  }).catch(function(){showLogin();});
+
+  // Login form
+  $('loginBtn').addEventListener('click',doLogin);
+  $('loginP').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
+  $('loginU').addEventListener('keydown',function(e){if(e.key==='Enter')$('loginP').focus();});
+
+  // Nav
+  $('admNav').addEventListener('click',function(e){
+    var item=e.target.closest('.nav-item');
+    if(item&&item.dataset.sec) loadSection(item.dataset.sec);
+  });
+
+  // Review filter buttons
+  $('revFilters').addEventListener('click',function(e){
+    var btn=e.target.closest('.fbtn');
+    if(!btn)return;
+    A.revFilter=btn.dataset.filter;
+    A.revPage=0;
+    loadReviews();
+  });
+
+  // Review pagination
+  $('revPrev').addEventListener('click',function(){if(A.revPage>0){A.revPage--;loadReviews();}});
+  $('revNext').addEventListener('click',function(){if((A.revPage+1)*REV_LIMIT<A.revTotal){A.revPage++;loadReviews();}});
+
+  // User search
+  $('userSearchBtn').addEventListener('click',function(){A.userQ=$('userSearch').value.trim();A.userPage=0;loadUsers();});
+  $('userSearch').addEventListener('keydown',function(e){if(e.key==='Enter'){A.userQ=e.target.value.trim();A.userPage=0;loadUsers();}});
+
+  // User pagination
+  $('userPrev').addEventListener('click',function(){if(A.userPage>0){A.userPage--;loadUsers();}});
+  $('userNext').addEventListener('click',function(){if((A.userPage+1)*USER_LIMIT<A.userTotal){A.userPage++;loadUsers();}});
+
+  // Edit user modal
+  $('editSaveBtn').addEventListener('click',saveEditUser);
+  $('editCancelBtn').addEventListener('click',function(){$('editUserOv').classList.remove('open');});
+  $('editUserOv').addEventListener('click',function(e){if(e.target===e.currentTarget)$('editUserOv').classList.remove('open');});
+
+  // Lightbox
+  $('lightboxClose').addEventListener('click',closeLightbox);
+  $('lightbox').addEventListener('click',function(e){if(e.target===e.currentTarget)closeLightbox();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLightbox();});
+}
+
+document.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>

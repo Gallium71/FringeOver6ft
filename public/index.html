@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+  <meta name="theme-color" content="#0e0806">
+  <title>Fringe Over 6ft — Edinburgh Festival Seating Comfort</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <div class="logo" id="logo">
+      <div class="logo-icon">
+        <span class="si-wrap" style="width:22px;height:22px" data-icon="icon_logo">
+          <img class="si-img" src="" alt="">
+          <span class="si-emoji">🪑</span>
+        </span>
+      </div>
+      <div class="logo-text">
+        <span class="logo-t">Fringe <em>Over</em> 6ft</span>
+        <span class="logo-sub">Edinburgh festival seating comfort</span>
+      </div>
+    </div>
+
+    <div class="srch">
+      <input id="sIn" placeholder="Search venues or spaces…" autocomplete="off">
+      <div class="srch-dd" id="sDD"></div>
+    </div>
+
+    <div class="ctrls">
+      <div id="gBar" style="display:flex;gap:.35rem">
+        <button class="btn" id="openStats">
+          <span class="si-wrap" style="width:14px;height:14px" data-icon="icon_stats">
+            <img class="si-img" src="" alt="">
+            <span class="si-emoji">📊</span>
+          </span>
+          Stats
+        </button>
+        <button class="btn btn-g" id="openAuth">Sign In</button>
+      </div>
+
+      <div id="uBar" style="display:none;gap:.35rem;align-items:center;flex-wrap:wrap">
+        <div class="pill">
+          <span class="si-wrap" style="width:13px;height:13px" data-icon="icon_user">
+            <img class="si-img" src="" alt="">
+            <span class="si-emoji">👤</span>
+          </span>
+          <b id="uN"></b>
+        </div>
+        <button class="btn" id="openPrefs">
+          <span class="si-wrap" style="width:13px;height:13px" data-icon="icon_settings">
+            <img class="si-img" src="" alt="">
+            <span class="si-emoji">⚙️</span>
+          </span>
+          <span id="uH">Preferences</span>
+        </button>
+        <button class="btn hidden" id="openMyRevs">
+          <span class="si-wrap" style="width:14px;height:14px" data-icon="icon_myreviews">
+            <img class="si-img" src="" alt="">
+            <span class="si-emoji">📋</span>
+          </span>
+          My Reviews
+        </button>
+        <button class="btn" id="openStats2">
+          <span class="si-wrap" style="width:14px;height:14px" data-icon="icon_stats">
+            <img class="si-img" src="" alt="">
+            <span class="si-emoji">📊</span>
+          </span>
+          Stats
+        </button>
+        <button class="btn btn-admin hidden" id="openAdmin">
+          <span class="si-wrap" style="width:13px;height:13px" data-icon="icon_admin">
+            <img class="si-img" src="" alt="">
+            <span class="si-emoji">🛡</span>
+          </span>
+          Admin
+        </button>
+        <button class="btn" id="logoutBtn">Sign Out</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ════════════════════════════════════════════════════════════
+     AWARDS HUB
+     ════════════════════════════════════════════════════════════ -->
+<div class="aw-outer hidden" id="awardsOuter">
+  <div class="aw">
+    <div class="aw-hero">
+      <div class="aw-cta" id="heroCta">
+        <div class="cta-loading">
+          <div class="cta-loading-spinner"></div>
+          Loading…
+        </div>
+      </div>
+
+      <div class="aw-title-row">
+        <div class="aw-title-main">
+          Home of the <span class="vice">Kneecap&nbsp;in&nbsp;a&nbsp;Vice</span> Awards
+        </div>
+        <div class="aw-title-sub">
+          Recognising Edinburgh's most knee-hostile seating — because somebody has to.
+        </div>
+        <div class="aw-title-desc">
+          Winners decided <strong>entirely by your reviews</strong>. No committee, no jury — 
+          just community ratings, <strong>updated live</strong>. Plus the 
+          <strong>Golden Armchair Awards</strong> for the brave few who actually care about legroom.
+        </div>
+        <div class="aw-title-actions">
+          <a class="aw-title-btn" data-nav="awards">All Awards →</a>
+          <a class="aw-title-btn outline" data-nav="about">How it works</a>
+        </div>
+      </div>
+
+      <div class="aw-strips">
+        <!-- Vice Strip -->
+        <div>
+          <div class="aw-sect-h vice">
+            <span class="aw-sect-ic si-wrap" data-icon="icon_vice">
+              <img class="si-img" src="" alt="">
+              <span class="si-emoji">🗜️</span>
+            </span>
+            <span class="aw-sect-t">Kneecap in a Vice</span>
+            <span class="aw-sect-s" id="awViceLabel">4 of 7 · cycling</span>
+            <span class="aw-sect-link" data-nav="awards" data-tab="vice">All 7 →</span>
+          </div>
+          <div class="aw-strip" id="awViceStrip">
+            <div class="aw-strip-track" id="awViceTrack"></div>
+          </div>
+        </div>
+
+        <!-- Gold Strip -->
+        <div>
+          <div class="aw-sect-h gold">
+            <span class="aw-sect-ic si-wrap" data-icon="icon_armchair">
+              <img class="si-img" src="" alt="">
+              <span class="si-emoji">🪑</span>
+            </span>
+            <span class="aw-sect-t">Golden Armchair</span>
+            <span class="aw-sect-s" id="awGoldLabel">4 of 7 · cycling</span>
+            <span class="aw-sect-link" data-nav="awards" data-tab="gold">All 7 →</span>
+          </div>
+          <div class="aw-strip" id="awGoldStrip">
+            <div class="aw-strip-track" id="awGoldTrack"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="aw-body" id="awBody" style="display:none">
+      <div class="aw-main" id="awMain"></div>
+      <aside class="aw-side">
+        <div class="aw-side-img" id="awSideImg">
+          <img class="side-site-img" src="" alt="">
+          <span class="ph-ic">
+            <span class="si-wrap" style="width:44px;height:44px" data-icon="icon_scotland">
+              <img class="si-img" src="" alt="">
+              <span class="si-emoji">🏴󠁧󠁢󠁳󠁣󠁴󠁿</span>
+            </span>
+          </span>
+          <span class="ph-lb">280×215</span>
+        </div>
+        <div class="aw-side-body">
+          <div class="aw-side-kicker">Plan your trip</div>
+          <div class="aw-side-title">Visit Edinburgh</div>
+          <div class="aw-side-text">
+            Coming for the Festival? Sort your trip before the city fills up — 
+            <strong>and before you book a venue your knees will regret.</strong>
+          </div>
+          <ul class="aw-side-feat">
+            <li>Hotels &amp; apartments near venues</li>
+            <li>Trains, coaches &amp; flight deals</li>
+            <li>City guides &amp; neighbourhood tips</li>
+          </ul>
+          <div class="aw-side-cta">
+            <a href="#" onclick="return false">Explore Edinburgh Deals →</a>
+          </div>
+          <div class="aw-side-disclaim">Affiliate link · helps keep this site free</div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     HERO SECTION
+     ════════════════════════════════════════════════════════════ -->
+<div class="hero hidden" id="hero">
+  <div class="mission">
+    <div class="m-head">
+      <div class="m-icon">
+        <span class="si-wrap" style="width:22px;height:22px" data-icon="icon_logo">
+          <img class="si-img" src="" alt="">
+          <span class="si-emoji">🪑</span>
+        </span>
+      </div>
+      <span class="m-title">Seating comfort for tall festival-goers</span>
+    </div>
+
+    <div class="m-body">
+      <strong>Fringe Over 6ft</strong> is a community review site for anyone who's spent a 
+      show with their knees jammed into the row ahead. We rate 
+      <span class="hl">legroom comfort</span> at every Edinburgh Fringe and International 
+      Festival venue.<br><br>
+      Reviews are <strong>Gaussian-weighted by height</strong> — set your height for 
+      personalised scores. 
+      <span class="si-wrap" style="width:14px;height:14px;display:inline-flex" data-icon="icon_ticket">
+        <img class="si-img" src="" alt="">
+        <span class="si-emoji">📸</span>
+      </span> 
+      <strong>Upload a ticket stub</strong> and your review counts <strong>5× more</strong> 
+      once verified.
+    </div>
+
+    <div class="m-scale" id="mScale">
+      <!-- populated by renderMissionScale() -->
+    </div>
+
+    <div class="m-pills">
+      <div class="m-pill"><span>70</span> venues</div>
+      <div class="m-pill"><span>213</span> spaces</div>
+      <div class="m-pill">
+        <span class="si-wrap" style="width:12px;height:12px" data-icon="icon_fringe">
+          <img class="si-img" src="" alt="">
+          <span class="si-emoji">🎭</span>
+        </span> Fringe
+      </div>
+      <div class="m-pill">
+        <span class="si-wrap" style="width:12px;height:12px" data-icon="icon_intl">
+          <img class="si-img" src="" alt="">
+          <span class="si-emoji">🎼</span>
+        </span> Int'l Festival
+      </div>
+    </div>
+
+    <div class="pn-w compact">
+      <div class="pn-hd">
+        These links help keep the lights on 
+        <span class="si-wrap" style="width:12px;height:12px" data-icon="icon_logo">
+          <img class="si-img" src="" alt="">
+          <span class="si-emoji">🪑</span>
+        </span>
+      </div>
+      <div class="pn-inline">
+        <div class="pn-ic">
+          <span class="si-wrap" style="width:22px;height:22px" data-icon="icon_hotel">
+            <img class="si-img" src="" alt="">
+            <span class="si-emoji">🏨</span>
+          </span>
+        </div>
+        <div class="pn-b">
+          <div class="pn-t">Visiting Edinburgh for the Festival?</div>
+          <div class="pn-d">Find accommodation, travel deals and city guides.</div>
+        </div>
+        <div class="pn-la">
+          <a href="#" onclick="return false">Explore →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rec-wrap">
+    <div class="rec-hdr">
+      <span class="rec-title">Recent Reviews</span>
+      <span class="rec-pg" id="recPg"></span>
+    </div>
+    <div class="rec-list" id="recList">
+      <div class="no-rec">No reviews yet</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     BREADCRUMB
+     ════════════════════════════════════════════════════════════ -->
+<nav class="bc">
+  <div class="bc-in" id="bcI">
+    <span class="bc-i act">All Venues</span>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════════
+     MAIN CONTENT
+     ════════════════════════════════════════════════════════════ -->
+<main class="page">
+
+  <!-- HOME VIEW -->
+  <div class="view active" id="v-home">
+    <div class="shd">
+      <h1 class="sht">Edinburgh Venues</h1>
+      <span class="shc" id="vCnt"></span>
+    </div>
+
+    <div class="ftabs" id="fTabs">
+      <button class="ft active" data-f="all">All</button>
+      <button class="ft" data-f="fringe">
+        <span class="si-wrap" style="width:14px;height:14px" data-icon="icon_fringe">
+          <img class="si-img" src="" alt="">
+          <span class="si-emoji">🎭</span>
+        </span> Fringe
+      </button>
+      <button class="ft" data-f="intl">
+        <span class="si-wrap" style="width:14px;height:14px" data-icon="icon_intl">
+          <img class="si-img" src="" alt="">
+          <span class="si-emoji">🎼</span>
+        </span> Int'l Festival
+      </button>
+    </div>
+
+    <div class="chips" id="gFilt">
+      <span class="chip active" data-g="all">All groups</span>
+      <span class="chip" data-g="pleasance">Pleasance</span>
+      <span class="chip" data-g="assembly">Assembly</span>
+      <span class="chip" data-g="underbelly">Underbelly</span>
+      <span class="chip" data-g="gilded">Gilded Balloon</span>
+      <span class="chip" data-g="theSpace">theSpace</span>
+      <span class="chip" data-g="laughing">LH / JtT</span>
+      <span class="chip" data-g="pbh">PBH Free</span>
+      <span class="chip" data-g="monkey">Monkey Barrel</span>
+      <span class="chip" data-g="stand">The Stand</span>
+      <span class="chip" data-g="zoo">ZOO</span>
+      <span class="chip" data-g="other">Independent</span>
+    </div>
+
+    <div class="vgrid" id="vGrid"></div>
+  </div>
+
+  <!-- VENUE VIEW -->
+  <div class="view" id="v-venue">
+    <div class="vhero">
+      <div class="vh-top">
+        <h1 class="vh-t" id="vhT"></h1>
+        <span class="badge" id="vhB"></span>
+      </div>
+      <div class="vh-addr" id="vhA"></div>
+      <div class="vh-rr">
+        <span class="vh-rl">Overall</span>
+        <div id="vhR"></div>
+        <span class="vh-rd" id="vhD"></span>
+      </div>
+    </div>
+
+    <div class="pn-w">
+      <div class="pn-hd">
+        These links help keep this site free 
+        <span class="si-wrap" style="width:12px;height:12px" data-icon="icon_logo">
+          <img class="si-img" src="" alt="">
+          <span class="si-emoji">🪑</span>
+        </span>
+      </div>
+      <div class="pn-c">
+        <div class="pn-i" id="venuePromoImg">
+          <img class="promo-site-img" src="" alt="">
+          <span class="pn-ic">
+            <span class="si-wrap" style="width:32px;height:32px" data-icon="icon_hotel">
+              <img class="si-img" src="" alt="">
+              <span class="si-emoji">🏨</span>
+            </span>
+          </span>
+          <span class="pn-il">Image Placeholder</span>
+        </div>
+        <div class="pn-b">
+          <div class="pn-t">Find accommodation near this venue</div>
+          <div class="pn-d" id="pvSub">Hotels and B&Bs with great festival deals.</div>
+          <div class="pn-a" style="margin-top:.4rem">
+            <a href="#" onclick="return false">Search Accommodation →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="shd">
+      <h2 class="sht">Spaces &amp; Stages</h2>
+      <span class="shc" id="vhSC"></span>
+    </div>
+    <div class="sgrid" id="sGrid"></div>
+  </div>
+
+  <!-- STAGE VIEW -->
+  <div class="view" id="v-stage">
+    <div class="st-hero">
+      <div class="st-venue" id="stV"></div>
+      <h1 class="st-title" id="stT"></h1>
+      <div class="st-cap" id="stC"></div>
+      <div class="st-stats">
+        <div>
+          <div class="stat-l">Adjusted</div>
+          <div id="stA"></div>
+        </div>
+        <div>
+          <div class="stat-l">Raw Avg</div>
+          <div id="stR"></div>
+        </div>
+        <div>
+          <div class="stat-l">Reviews</div>
+          <div class="stat-v" id="stN">0</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="curve">
+      <div class="curve-h">Rating by reviewer height</div>
+      <canvas id="bellCurveCanvas" width="900" height="120"></canvas>
+      <div class="curve-lg">
+        <div class="cl"><div class="cd" style="background:var(--gold)"></div>Weighted</div>
+        <div class="cl"><div class="cd" style="background:rgba(212,175,55,.25)"></div>Raw</div>
+        <div class="cl"><div class="cd" style="background:#d06060"></div>You</div>
+      </div>
+    </div>
+
+    <!-- EVENTS SECTION — populated by renderEvents() -->
+    <div id="stEvents"></div>
+
+    <div class="pn-w">
+      <div class="pn-hd">
+        Planning your trip? These links help keep us running 
+        <span class="si-wrap" style="width:12px;height:12px" data-icon="icon_logo">
+          <img class="si-img" src="" alt="">
+          <span class="si-emoji">🪑</span>
+        </span>
+      </div>
+      <div class="pn-lb">
+        <div class="pn-li" id="stagePromoImg">
+          <img class="promo-site-img" src="" alt="">
+          <span class="pn-ic">
+            <span class="si-wrap" style="width:26px;height:26px" data-icon="icon_shows">
+              <img class="si-img" src="" alt="">
+              <span class="si-emoji">🎟️</span>
+            </span>
+          </span>
+          <span class="pn-il">Image Placeholder</span>
+        </div>
+        <div class="pn-lbd">
+          <div style="flex:1;min-width:0">
+            <div class="pn-lt">Getting to Edinburgh? Compare travel options</div>
+            <div class="pn-ld">Trains, buses and coaches — find the best route.</div>
+          </div>
+          <div class="pn-la">
+            <a href="#" onclick="return false">Compare Travel →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rsplit">
+      <div class="pnl">
+        <div class="pnl-h">Reviews</div>
+        <div class="rv-scroll" id="rvList"></div>
+      </div>
+      <div>
+        <div class="pnl" style="margin-bottom:1rem">
+          <div class="pnl-h">Your Review</div>
+          <div id="rvForm"></div>
+        </div>
+        <div class="pn-w">
+          <div class="pn-hd">Support this project</div>
+          <div class="pn-sb">
+            <div class="pn-si" id="stagePromoImg2">
+              <img class="promo-site-img" src="" alt="">
+              <span class="pn-ic">
+                <span class="si-wrap" style="width:26px;height:26px" data-icon="icon_explore">
+                  <img class="si-img" src="" alt="">
+                  <span class="si-emoji">🗺️</span>
+                </span>
+              </span>
+            </div>
+            <div class="pn-sbd">
+              <div class="pn-st">Discover Edinburgh</div>
+              <div class="pn-sd">Walking tours, restaurants, hidden gems and more.</div>
+              <div class="pn-sa">
+                <a href="#" onclick="return false">Explore Guides →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AWARDS VIEW -->
+  <div class="view" id="v-awards">
+    <div class="awds-hero">
+      <div class="awds-hero-art" id="awardsHeroArt">
+        <img class="hero-site-img" src="" alt="">
+        <span class="ph-ic">
+          <span class="si-wrap" style="width:64px;height:64px" data-icon="icon_vice">
+            <img class="si-img" src="" alt="">
+            <span class="si-emoji">🗜️</span>
+          </span>
+        </span>
+        <span class="ph-lb">Cover · 260×170</span>
+      </div>
+      <div class="awds-hero-body">
+        <div class="awds-hero-title">
+          The <span class="vice">Kneecap in a Vice</span> &amp; 
+          <span class="gold">Golden Armchair</span> Awards
+        </div>
+        <div class="awds-hero-sub">
+          Fourteen categories judged entirely by community reviews, height-weighted, updated live. 
+          <strong>Your reviews decide the winners.</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="awds-tabs" id="awdsTabs">
+      <button class="awds-tab vice active" data-tab="vice">
+        <span class="si-wrap" style="width:16px;height:16px" data-icon="icon_vice">
+          <img class="si-img" src="" alt="">
+          <span class="si-emoji">🗜️</span>
+        </span>
+        Kneecap in a Vice <span class="awds-tab-cnt">7 categories</span>
+      </button>
+      <button class="awds-tab gold" data-tab="gold">
+        <span class="si-wrap" style="width:16px;height:16px" data-icon="icon_armchair">
+          <img class="si-img" src="" alt="">
+          <span class="si-emoji">🪑</span>
+        </span>
+        Golden Armchair <span class="awds-tab-cnt">7 categories</span>
+      </button>
+    </div>
+
+    <div class="awds-list" id="awdsList"></div>
+  </div>
+
+  <!-- AWARD DETAIL VIEW -->
+  <div class="view" id="v-award">
+    <div id="awpHero"></div>
+    <div id="awpShd"></div>
+    <div class="awp-list" id="awpList"></div>
+    <div id="awpUnreviewed"></div>
+    <div class="awp-others" id="awpOthers"></div>
+  </div>
+
+  <!-- VENUE REPORT VIEW -->
+  <div class="view" id="v-venueReport">
+    <div id="venueReportContent"></div>
+  </div>
+
+  <!-- OPERATOR REPORT VIEW -->
+  <div class="view" id="v-operatorReport">
+    <div id="operatorReportContent"></div>
+  </div>
+
+  <!-- MY REVIEWS VIEW -->
+  <div class="view" id="v-myreviews">
+    <div id="myRevContent">
+      <div style="text-align:center;padding:2rem;color:var(--t3)">Loading…</div>
+    </div>
+  </div>
+
+  <!-- ADMIN VIEW -->
+  <div class="view" id="v-admin">
+    <div class="adm-layout">
+      <nav class="adm-nav" id="admNav">
+        <div class="adm-nav-section">Overview</div>
+        <div class="adm-nav-item active" data-adm="dashboard">
+          <span class="si-wrap" style="width:14px;height:14px" data-icon="icon_stats">
+            <img class="si-img" src="" alt="">
+            <span class="si-emoji">📊</span>
+          </span> Dashboard
+        </div>
+
+        <div class="adm-nav-section">Moderation</div>
+        <div class="adm-nav-item" data-adm="tickets">
+          <span class="si-wrap" style="width:14px;height:14px" data-icon="icon_ticket">
+            <img class="si-img" src="" alt="">
+            <span class="si-emoji">📸</span>
+          </span>
+          Ticket Queue <span class="adm-badge" id="admTicketBadge">0</span>
+        </div>
+        <div class="adm-nav-item" data-adm="reviews">
+          <span class="si-wrap" style="width:14px;height:14px" data-icon="icon_comments">
+            <img class="si-img" src="" alt="">
+            <span class="si-emoji">💬</span>
+          </span> Reviews
+        </div>
+
+        <div class="adm-nav-section">Users</div>
+        <div class="adm-nav-item" data-adm="users">
+          <span class="si-wrap" style="width:14px;height:14px" data-icon="icon_users">
+            <img class="si-img" src="" alt="">
+            <span class="si-emoji">👥</span>
+          </span> Users
+        </div>
+      </nav>
+
+      <div class="adm-main">
+        <!-- Dashboard Section -->
+        <div class="adm-section active" id="adm-dashboard">
+          <div class="adm-hd">
+            <h2>Admin Dashboard</h2>
+            <span class="shc">Fringe Over 6ft moderation panel</span>
+          </div>
+          <div class="adm-kpi-row" id="admKpis"></div>
+          <div class="insight-box" id="admInsight" style="margin-bottom:0">Loading…</div>
+        </div>
+
+        <!-- Tickets Section -->
+        <div class="adm-section" id="adm-tickets">
+          <div class="adm-hd">
+            <h2>
+              <span class="si-wrap" style="width:18px;height:18px" data-icon="icon_ticket">
+                <img class="si-img" src="" alt="">
+                <span class="si-emoji">📸</span>
+              </span> Ticket Verification Queue
+            </h2>
+            <span class="shc" id="admTicketCount">Loading…</span>
+          </div>
+          <div class="insight-box">
+            Approve tickets to grant <strong>5× vote weight</strong>. 
+            Reject if unclear, fake, or unrelated. Rejected images are deleted.
+          </div>
+          <div class="ticket-queue" id="admTicketQueue">
+            <div class="no-rv">Loading…</div>
+          </div>
+        </div>
+
+        <!-- Reviews Section -->
+        <div class="adm-section" id="adm-reviews">
+          <div class="adm-hd">
+            <h2>
+              <span class="si-wrap" style="width:18px;height:18px" data-icon="icon_comments">
+                <img class="si-img" src="" alt="">
+                <span class="si-emoji">💬</span>
+              </span> Review Management
+            </h2>
+            <span class="shc" id="admRevCount"></span>
+          </div>
+          <div class="adm-search">
+            <div class="adm-filter-btns" id="admRevFilters">
+              <button class="adm-filter-btn active" data-filter="all">All</button>
+              <button class="adm-filter-btn" data-filter="pending">
+                <span class="si-wrap" style="width:12px;height:12px" data-icon="icon_ticket">
+                  <img class="si-img" src="" alt="">
+                  <span class="si-emoji">📸</span>
+                </span> Pending Tickets
+              </button>
+              <button class="adm-filter-btn" data-filter="flagged">
+                <span class="si-wrap" style="width:12px;height:12px" data-icon="icon_flag">
+                  <img class="si-img" src="" alt="">
+                  <span class="si-emoji">🚩</span>
+                </span> Flagged
+              </button>
+            </div>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="adm-tbl" id="admRevTable">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>User</th>
+                  <th>Space</th>
+                  <th>Rating</th>
+                  <th>Comment</th>
+                  <th>Ticket</th>
+                  <th>Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admRevBody"></tbody>
+            </table>
+          </div>
+          <div class="adm-pagination">
+            <span class="adm-page-info" id="admRevPageInfo"></span>
+            <button class="btn" id="admRevPrev" disabled>← Prev</button>
+            <button class="btn" id="admRevNext">Next →</button>
+          </div>
+        </div>
+
+        <!-- Users Section -->
+        <div class="adm-section" id="adm-users">
+          <div class="adm-hd">
+            <h2>
+              <span class="si-wrap" style="width:18px;height:18px" data-icon="icon_users">
+                <img class="si-img" src="" alt="">
+                <span class="si-emoji">👥</span>
+              </span> User Management
+            </h2>
+            <span class="shc" id="admUserCount"></span>
+          </div>
+          <div class="adm-search">
+            <input id="admUserSearch" placeholder="Search username, email…" autocomplete="off">
+            <button class="btn" id="admUserSearchBtn">Search</button>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="adm-tbl" id="admUserTable">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Username</th>
+                  <th>Display Name</th>
+                  <th>Email</th>
+                  <th>Height</th>
+                  <th>Reviews</th>
+                  <th>Status</th>
+                  <th>Joined</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admUserBody"></tbody>
+            </table>
+          </div>
+          <div class="adm-pagination">
+            <span class="adm-page-info" id="admUserPageInfo"></span>
+            <button class="btn" id="admUserPrev" disabled>← Prev</button>
+            <button class="btn" id="admUserNext">Next →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRESS VIEW -->
+  <div class="view" id="v-press">
+    <div class="shd">
+      <h1 class="sht">
+        <span class="si-wrap" style="width:18px;height:18px;display:inline-flex;vertical-align:middle;margin-right:.3rem" data-icon="icon_press">
+          <img class="si-img" src="" alt="">
+          <span class="si-emoji">📰</span>
+        </span> Press &amp; Announcements
+      </h1>
+    </div>
+    <div class="prs-intro">
+      <strong>Media enquiries:</strong> email 
+      <a href="mailto:press@fringeover6ft.com">press@fringeover6ft.com</a>
+    </div>
+    <div class="prs-list" id="prsList"></div>
+  </div>
+
+  <!-- ABOUT VIEW -->
+  <div class="view" id="v-about">
+    <div class="abt-hero">
+      <div class="abt-hero-t">About Fringe Over 6ft</div>
+      <div class="abt-hero-s">A community project built by tall people, for tall people.</div>
+    </div>
+
+    <div class="abt-grid">
+      <div class="abt-card">
+        <div class="abt-card-h">
+          <span class="abt-card-ic">
+            <span class="si-wrap" style="width:18px;height:18px" data-icon="icon_logo">
+              <img class="si-img" src="" alt="">
+              <span class="si-emoji">🪑</span>
+            </span>
+          </span>
+          What is this?
+        </div>
+        <div class="abt-card-b">
+          <p>
+            <strong>Fringe Over 6ft</strong> is a crowdsourced database of seating comfort 
+            at Edinburgh Fringe and International Festival venues.
+          </p>
+          <p>We cover <strong>70+ venues</strong> and <strong>200+ individual spaces</strong>.</p>
+        </div>
+      </div>
+
+      <div class="abt-card">
+        <div class="abt-card-h">
+          <span class="abt-card-ic">
+            <span class="si-wrap" style="width:18px;height:18px" data-icon="icon_height">
+              <img class="si-img" src="" alt="">
+              <span class="si-emoji">📐</span>
+            </span>
+          </span>
+          How scoring works
+        </div>
+        <div class="abt-card-b">
+          <p>
+            Reviews use a 0–5 chair scale, <strong>Gaussian-weighted by height</strong> (σ=15cm). 
+            Set your height for personalised scores.
+          </p>
+          <p>
+            <span class="si-wrap" style="width:14px;height:14px;display:inline-flex" data-icon="icon_ticket">
+              <img class="si-img" src="" alt="">
+              <span class="si-emoji">📸</span>
+            </span> 
+            <strong>Verified reviews</strong> (ticket stub approved by our team) count 
+            <strong>5× more</strong>.
+          </p>
+        </div>
+      </div>
+
+      <div class="abt-card">
+        <div class="abt-card-h">
+          <span class="abt-card-ic">
+            <span class="si-wrap" style="width:18px;height:18px" data-icon="icon_vice">
+              <img class="si-img" src="" alt="">
+              <span class="si-emoji">🗜️</span>
+            </span>
+          </span>
+          The Awards
+        </div>
+        <div class="abt-card-b">
+          <p>
+            Winners decided <strong>entirely by your reviews</strong>. No judges. 
+            We hand out the <s>plastic tat</s> prestigious trophies at season end.
+          </p>
+        </div>
+      </div>
+
+      <div class="abt-card">
+        <div class="abt-card-h">
+          <span class="abt-card-ic">
+            <span class="si-wrap" style="width:18px;height:18px" data-icon="icon_review">
+              <img class="si-img" src="" alt="">
+              <span class="si-emoji">✍️</span>
+            </span>
+          </span>
+          Contributing
+        </div>
+        <div class="abt-card-b">
+          <ul>
+            <li>Register and set your height</li>
+            <li>Rate legroom honestly (0–5)</li>
+            <li>Add a sentence on seat type, row tips</li>
+            <li>
+              <span class="si-wrap" style="width:12px;height:12px;display:inline-flex" data-icon="icon_ticket">
+                <img class="si-img" src="" alt="">
+                <span class="si-emoji">📸</span>
+              </span> Upload ticket stub for 5× weight
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="abt-card">
+        <div class="abt-card-h">
+          <span class="abt-card-ic">
+            <span class="si-wrap" style="width:18px;height:18px" data-icon="icon_money">
+              <img class="si-img" src="" alt="">
+              <span class="si-emoji">💰</span>
+            </span>
+          </span>
+          How we stay free
+        </div>
+        <div class="abt-card-b">
+          <p>
+            Occasional clearly-marked travel/accommodation links. They never affect scores. 
+            No venue can pay for a better rating. Ever.
+          </p>
+        </div>
+      </div>
+
+      <div class="abt-card">
+        <div class="abt-card-h">
+          <span class="abt-card-ic">
+            <span class="si-wrap" style="width:18px;height:18px" data-icon="icon_email">
+              <img class="si-img" src="" alt="">
+              <span class="si-emoji">📧</span>
+            </span>
+          </span>
+          Contact
+        </div>
+        <div class="abt-card-b">
+          <p>
+            <strong>General:</strong> hello@fringeover6ft.com<br>
+            <strong>Press:</strong> press@fringeover6ft.com<br>
+            <strong>Venue corrections:</strong> venues@fringeover6ft.com
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="abt-disclaim">
+      Independent community project not affiliated with the Edinburgh Festival Fringe Society, 
+      the Edinburgh International Festival, or any venue operator.
+    </div>
+  </div>
+
+  <!-- STATS VIEW -->
+  <div class="view" id="v-stats">
+    <div class="shd">
+      <h1 class="sht">
+        <span class="si-wrap" style="width:18px;height:18px;display:inline-flex;vertical-align:middle;margin-right:.3rem" data-icon="icon_stats">
+          <img class="si-img" src="" alt="">
+          <span class="si-emoji">📊</span>
+        </span>
+        Statistics
+      </h1>
+      <span class="shc">Legroom trends across Edinburgh festival venues</span>
+    </div>
+    <div class="stats-nav" id="statsNav">
+      <button class="sn-btn active" data-s="overview">Overview</button>
+      <button class="sn-btn" data-s="height">By Height</button>
+      <button class="sn-btn" data-s="venue">By Venue Type</button>
+      <button class="sn-btn" data-s="area">By Area</button>
+      <button class="sn-btn" data-s="trends">Trends</button>
+    </div>
+    <div id="statsContent"></div>
+  </div>
+
+</main>
+
+<!-- ════════════════════════════════════════════════════════════
+     FOOTER
+     ════════════════════════════════════════════════════════════ -->
+<footer class="ftr">
+  <div class="ftr-in">
+    <div class="ftr-links">
+      <a data-nav="home">Home</a>
+      <span class="sep">·</span>
+      <a data-nav="awards">Awards</a>
+      <span class="sep">·</span>
+      <a data-nav="venueReport">Venue Reports</a>
+      <span class="sep">·</span>
+      <a data-nav="operatorReport">Operator Reports</a>
+      <span class="sep">·</span>
+      <a data-nav="about">About</a>
+      <span class="sep">·</span>
+      <a data-nav="press">Press</a>
+      <span class="sep">·</span>
+      <a data-nav="stats">Statistics</a>
+      <span class="sep">·</span>
+      <a href="mailto:hello@fringeover6ft.com">Contact</a>
+    </div>
+    <div class="ftr-copy">
+      © 2025 Fringe Over 6ft · Built by tall people, for tall people 
+      <span class="si-wrap" style="width:14px;height:14px" data-icon="icon_logo">
+        <img class="si-img" src="" alt="">
+        <span class="si-emoji">🪑</span>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════════════════════════
+     TICKER
+     ════════════════════════════════════════════════════════════ -->
+<div class="ticker-wrap hidden" id="ticker">
+  <div class="ticker-row">
+    <div class="ticker-label fame">
+      <span class="si-wrap" style="width:14px;height:14px" data-icon="icon_fame">
+        <img class="si-img" src="" alt="">
+        <span class="si-emoji">🏆</span>
+      </span>
+      FAME
+    </div>
+    <div class="ticker-scroll">
+      <div class="ticker-track" id="ftk"></div>
+    </div>
+  </div>
+  <div class="ticker-row">
+    <div class="ticker-label shame">
+      <span class="si-wrap" style="width:14px;height:14px" data-icon="icon_shame">
+        <img class="si-img" src="" alt="">
+        <span class="si-emoji">💀</span>
+      </span>
+      SHAME
+    </div>
+    <div class="ticker-scroll">
+      <div class="ticker-track" id="stk"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     AUTH MODAL
+     ════════════════════════════════════════════════════════════ -->
+<div class="ov" id="authOv">
+  <div class="mdl">
+    <div class="mdl-t">Fringe Over 6ft</div>
+    <div class="mdl-s">Sign in or register to submit reviews.</div>
+
+    <div class="atabs">
+      <button class="at active" data-t="login">Sign In</button>
+      <button class="at" data-t="reg">Register</button>
+      <button class="at" data-t="rec">Reset</button>
+    </div>
+
+    <!-- Login Panel -->
+    <div class="ap active" id="pLogin">
+      <div class="ab" id="lErr"></div>
+      <div class="fg">
+        <label class="fl">Username or Email</label>
+        <input class="fi" id="lU" maxlength="254" autocomplete="username" placeholder="your username or email">
+      </div>
+      <div class="fg">
+        <label class="fl">Password</label>
+        <input class="fi" type="password" id="lP" maxlength="128" autocomplete="current-password">
+      </div>
+      <div class="mdl-f">
+        <button class="mc authCl">Cancel</button>
+        <button class="mx" id="doL">Sign In</button>
+      </div>
+    </div>
+
+    <!-- Register Panel -->
+    <div class="ap" id="pReg">
+      <div class="ab" id="rErr"></div>
+      <div class="sb" id="rOk"></div>
+
+      <div class="fg">
+        <label class="fl">Username <span class="rq">*</span></label>
+        <input class="fi" id="rU" maxlength="30" autocomplete="username" placeholder="3-30 chars">
+        <div class="ferr" id="rUE"></div>
+      </div>
+
+      <div class="fg">
+        <label class="fl">Email <span class="rq">*</span></label>
+        <input class="fi" type="email" id="rE" maxlength="254" autocomplete="email" placeholder="you@example.com">
+        <div class="fhint">We'll send a verification link</div>
+        <div class="ferr" id="rEE"></div>
+      </div>
+
+      <div class="fg">
+        <label class="fl">Display Name</label>
+        <input class="fi" id="rD" maxlength="40" placeholder="shown on reviews (optional)">
+      </div>
+
+      <div class="fg">
+        <label class="fl">Password <span class="rq">*</span></label>
+        <input class="fi" type="password" id="rP" maxlength="128" autocomplete="new-password">
+        <div class="pws"><div class="pws-bar" id="pwB"></div></div>
+        <div class="fhint" id="pwH">Min 8 characters</div>
+        <div class="ferr" id="rPE"></div>
+      </div>
+
+      <div class="fg">
+        <label class="fl">Confirm Password <span class="rq">*</span></label>
+        <input class="fi" type="password" id="rP2" maxlength="128">
+        <div class="ferr" id="rP2E"></div>
+      </div>
+
+      <div class="fg">
+        <label class="fl">Security Question <span class="rq">*</span></label>
+        <select class="fs" id="rSQ">
+          <option value="">— choose —</option>
+          <option value="1">First street you lived on?</option>
+          <option value="2">Name of first pet?</option>
+          <option value="3">Grandmother's maiden name?</option>
+          <option value="4">City born in?</option>
+          <option value="5">First car make?</option>
+          <option value="6">Childhood friend?</option>
+        </select>
+        <div class="ferr" id="rSQE"></div>
+      </div>
+
+      <div class="fg">
+        <label class="fl">Security Answer <span class="rq">*</span></label>
+        <input class="fi" id="rSA" maxlength="100">
+        <div class="fhint">Not case-sensitive · stored securely</div>
+        <div class="ferr" id="rSAE"></div>
+      </div>
+
+      <div class="fg">
+        <label class="fl">Height (optional)</label>
+        <div class="htr">
+          <div class="htc">
+            <input class="fi" type="number" id="rFt" placeholder="ft" min="3" max="8" style="text-align:center">
+            <span class="htu">feet</span>
+          </div>
+          <div class="htc">
+            <input class="fi" type="number" id="rIn" placeholder="in" min="0" max="11" style="text-align:center">
+            <span class="htu">inches</span>
+          </div>
+          <div class="htor">or</div>
+          <div class="htc">
+            <input class="fi" type="number" id="rCm" placeholder="cm" min="90" max="250" style="text-align:center">
+            <span class="htu">cm</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mdl-f">
+        <button class="mc authCl">Cancel</button>
+        <button class="mx" id="doR">Create Account</button>
+      </div>
+    </div>
+
+    <!-- Recovery Panel -->
+    <div class="ap" id="pRec">
+      <div class="ab" id="rcErr"></div>
+      <div class="sb" id="rcOk"></div>
+
+      <div id="rc1">
+        <div class="fg">
+          <label class="fl">Username or Email</label>
+          <input class="fi" id="rcU" maxlength="254">
+        </div>
+        <div class="mdl-f">
+          <button class="mc authCl">Cancel</button>
+          <button class="mx" id="doRcL">Look Up</button>
+        </div>
+      </div>
+
+      <div id="rc2" style="display:none">
+        <div class="fg">
+          <label class="fl">Security Question</label>
+          <div class="ib" id="rcQ"></div>
+        </div>
+        <div class="fg">
+          <label class="fl">Answer</label>
+          <input class="fi" id="rcA" maxlength="100">
+        </div>
+        <div class="mdl-f">
+          <button class="mc" id="rcBk">Back</button>
+          <button class="mx" id="doRcV">Verify</button>
+        </div>
+      </div>
+
+      <div id="rc3" style="display:none">
+        <div class="sb show" style="display:block">Identity verified. Set new password.</div>
+        <div class="fg">
+          <label class="fl">New Password <span class="rq">*</span></label>
+          <input class="fi" type="password" id="rcNP" maxlength="128">
+          <div class="pws"><div class="pws-bar" id="rcPB"></div></div>
+        </div>
+        <div class="fg">
+          <label class="fl">Confirm <span class="rq">*</span></label>
+          <input class="fi" type="password" id="rcNP2" maxlength="128">
+        </div>
+        <div class="mdl-f">
+          <button class="mc authCl">Cancel</button>
+          <button class="mx" id="doRcR">Set Password</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     PREFERENCES MODAL
+     ════════════════════════════════════════════════════════════ -->
+<div class="ov" id="prefOv">
+  <div class="mdl">
+    <div class="mdl-t">
+      <span class="si-wrap" style="width:16px;height:16px" data-icon="icon_settings">
+        <img class="si-img" src="" alt="">
+        <span class="si-emoji">⚙️</span>
+      </span> Preferences
+    </div>
+    <div class="mdl-s">Manage your account settings.</div>
+
+    <div class="ab" id="prefErr"></div>
+    <div class="sb" id="prefOk"></div>
+
+    <div class="pref-section">
+      <div class="pref-section-t">
+        <span class="si-wrap" style="width:14px;height:14px" data-icon="icon_height">
+          <img class="si-img" src="" alt="">
+          <span class="si-emoji">📏</span>
+        </span> Height
+      </div>
+      <div class="fg">
+        <label class="fl">Feet &amp; Inches</label>
+        <div class="htr">
+          <div class="htc">
+            <input class="fi" type="number" id="hFt" placeholder="ft" min="3" max="8" style="text-align:center">
+            <span class="htu">feet</span>
+          </div>
+          <div class="htc">
+            <input class="fi" type="number" id="hIn" placeholder="in" min="0" max="11" style="text-align:center">
+            <span class="htu">inches</span>
+          </div>
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl">Or Centimetres</label>
+        <input class="fi" type="number" id="hCm" placeholder="e.g. 188" min="90" max="250">
+      </div>
+    </div>
+
+    <div class="pref-section">
+      <div class="pref-section-t">
+        <span class="si-wrap" style="width:14px;height:14px" data-icon="icon_user">
+          <img class="si-img" src="" alt="">
+          <span class="si-emoji">👤</span>
+        </span> Profile
+      </div>
+      <div class="fg">
+        <label class="fl">Display Name</label>
+        <input class="fi" id="prefDN" maxlength="40">
+      </div>
+    </div>
+
+    <div class="pref-section">
+      <div class="pref-section-t">
+        <span class="si-wrap" style="width:14px;height:14px" data-icon="icon_admin">
+          <img class="si-img" src="" alt="">
+          <span class="si-emoji">🔒</span>
+        </span> Privacy
+      </div>
+      <div class="tog-row">
+        <div class="tog-info">
+          <div class="tog-label">Show height on reviews</div>
+          <div class="tog-desc">Other users can see your height</div>
+        </div>
+        <label class="tog">
+          <input type="checkbox" id="prefSH">
+          <span class="tog-sl"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="pref-section">
+      <div class="pref-section-t">
+        <span class="si-wrap" style="width:14px;height:14px" data-icon="icon_email">
+          <img class="si-img" src="" alt="">
+          <span class="si-emoji">📧</span>
+        </span> Email
+      </div>
+      <div class="tog-row">
+        <div class="tog-info">
+          <div class="tog-label">Festival updates &amp; newsletters</div>
+          <div class="tog-desc">Occasional emails about venue changes and Fringe news</div>
+        </div>
+        <label class="tog">
+          <input type="checkbox" id="prefME">
+          <span class="tog-sl"></span>
+        </label>
+      </div>
+      <div style="margin-top:.6rem;padding:.5rem .65rem;background:var(--b0);border-radius:var(--r);border:1px solid var(--bdr)">
+        <div style="font-size:.62rem;color:var(--t3);line-height:1.5">
+          Your email: <strong style="color:var(--t2)" id="prefEmail">—</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="mdl-f">
+      <button class="mc" id="prefCl">Cancel</button>
+      <button class="mx" id="prefSv">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     EDIT USER MODAL
+     ════════════════════════════════════════════════════════════ -->
+<div class="ov" id="editUserOv">
+  <div class="mdl">
+    <div class="mdl-t">
+      <span class="si-wrap" style="width:16px;height:16px" data-icon="icon_edit">
+        <img class="si-img" src="" alt="">
+        <span class="si-emoji">✏️</span>
+      </span> Edit User
+    </div>
+    <div class="mdl-s" id="editUserSub">Editing user account.</div>
+    <div class="ab" id="editUserErr"></div>
+    <div class="sb" id="editUserOk"></div>
+    <div id="editUserFields"></div>
+    <div class="mdl-f">
+      <button class="mc" id="editUserCl">Cancel</button>
+      <button class="mx" id="editUserSv">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     TOAST CONTAINER
+     ════════════════════════════════════════════════════════════ -->
+<div class="tw" id="tw"></div>
+
+<script src="/app.js"></script>
+
+</body>
+</html>
